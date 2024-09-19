@@ -33,6 +33,6 @@ public class FileUploadController {
     @GetMapping("/health")
     public ResponseEntity<String> healthCheck() {
         
-        return new ResponseEntity<>("File Upload Service is running", HttpStatus.OK);
+        return ResponseEntity.ok(ResponseFactory.getSuccessResult());
     }
 }
