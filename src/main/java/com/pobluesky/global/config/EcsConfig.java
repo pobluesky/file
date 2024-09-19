@@ -13,8 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class EcsConfig {
 
+    @Value("${spring.application.name}")
+    private String appName;  // spring.application.name 값 주입
+
     @Value("${server.port}")
-    private int serverPort;  // server.port를 가져오기 위한 필드 추가
+    private int serverPort;  // server.port 값 주입
 
     @Bean
     public EurekaInstanceConfigBean eurekaInstanceConfig(InetUtils inetUtils) {
@@ -29,7 +32,12 @@ public class EcsConfig {
 
         config.setIpAddress(ip);
         config.setPreferIpAddress(true);
-        config.setNonSecurePort(serverPort);  // 설정한 server.port를 사용하여 nonSecurePort 설정
+        config.setNonSecurePort(serverPort);
+
+        // 서비스 이름 설정
+        config.setAppname(appName);
+        config.setVirtualHostName(appName);
+        config.setSecureVirtualHostName(appName);
 
         return config;
     }
