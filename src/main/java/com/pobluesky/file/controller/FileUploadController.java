@@ -26,7 +26,13 @@ public class FileUploadController {
     @PostMapping
     @Operation(summary = "file 업로드")
     public FileInfo uploadFile(@RequestPart("file") MultipartFile file) {
-        log.debug("파일 업로드 시작 controller");
+        
         return fileService.uploadFile(file);
+    }
+
+    @GetMapping("/health")
+    public ResponseEntity<String> healthCheck() {
+        
+        return new ResponseEntity<>("File Upload Service is running", HttpStatus.OK);
     }
 }
