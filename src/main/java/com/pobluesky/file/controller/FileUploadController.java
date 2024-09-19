@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +33,7 @@ public class FileUploadController {
 
     @GetMapping("/health")
     public ResponseEntity<String> healthCheck() {
-        log.info("Health Check 호출됨");
-        return ResponseEntity.ok("File Upload Service is running"); // 간단한 문자열 반환
+        
+        return ResponseEntity.ok(ResponseFactory.getSuccessResult());
     }
 }
