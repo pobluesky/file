@@ -1,3 +1,14 @@
+package com.pobluesky.global.config;
+
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.commons.util.InetUtils;
+import org.springframework.cloud.netflix.eureka.EurekaInstanceConfigBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 @Configuration
 @Slf4j
 public class EcsConfig {
