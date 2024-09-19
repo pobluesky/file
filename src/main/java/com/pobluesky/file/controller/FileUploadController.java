@@ -32,7 +32,7 @@ public class FileUploadController {
 
     @GetMapping("/health")
     public ResponseEntity<String> healthCheck() {
-        
-        return ResponseEntity.ok(ResponseFactory.getSuccessResult());
+        log.info("Health Check 호출됨");
+        return ResponseEntity.ok("File Upload Service is running"); // 간단한 문자열 반환
     }
 }
