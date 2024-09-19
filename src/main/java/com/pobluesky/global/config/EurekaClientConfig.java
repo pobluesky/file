@@ -1,12 +1,11 @@
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.eureka.EurekaInstanceConfigBean;
-import org.springframework.cloud.netflix.eureka.serviceregistry.EurekaRegistration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.cloud.commons.util.InetUtils;
 
-import com.netflix.appinfo.InstanceInfo;
-
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -15,21 +14,27 @@ public class EurekaClientConfig {
     @Value("${ECS_CONTAINER_METADATA_URI_V4}")
     private String ecsMetadataUri;
 
+    private final InetUtils inetUtils;
+
+    public EurekaClientConfig(InetUtils inetUtils) {
+        this.inetUtils = inetUtils;
+    }
+
     @Bean
     public EurekaInstanceConfigBean eurekaInstanceConfigBean() {
-        EurekaInstanceConfigBean config = new EurekaInstanceConfigBean();
+        EurekaInstanceConfigBean config = new EurekaInstanceConfigBean(inetUtils);
 
         try {
             RestTemplate restTemplate = new RestTemplate();
-            // Task 메타데이터 가져오기
             Map<String, Object> taskMetadata = restTemplate.getForObject(ecsMetadataUri + "/task", Map.class);
 
-            // 컨테이너의 네트워크 인터페이스에서 IP 주소 가져오기
-            Map<String, Object> container = ((List<Map<String, Object>>) taskMetadata.get("Containers")).get(0);
-            Map<String, Object> network = ((List<Map<String, Object>>) container.get("Networks")).get(0);
-            String ipAddress = ((List<String>) network.get("IPv4Addresses")).get(0);
+            List<Map<String, Object>> containers = (List<Map<String, Object>>) taskMetadata.get("Containers");
+            Map<String, Object> container = containers.get(0);
+            List<Map<String, Object>> networks = (List<Map<String, Object>>) container.get("Networks");
+            Map<String, Object> network = networks.get(0);
+            List<String> ipAddresses = (List<String>) network.get("IPv4Addresses");
+            String ipAddress = ipAddresses.get(0);
 
-            // IP 주소를 Eureka 인스턴스 설정에 반영
             config.setIpAddress(ipAddress);
             config.setPreferIpAddress(true);
 
