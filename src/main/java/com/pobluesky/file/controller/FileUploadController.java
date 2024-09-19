@@ -38,7 +38,7 @@ public class FileUploadController {
     }
 
     @GetMapping("/health")
-    public ResponseEntity<String> healthCheck() {
+    public ResponseEntity<CommonResult> healthCheck() {
         
         return ResponseEntity.ok(ResponseFactory.getSuccessResult());
     }
