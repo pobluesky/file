@@ -13,19 +13,23 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 public class EcsConfig {
 
+    @Value("${server.port}")
+    private int serverPort;  // server.port를 가져오기 위한 필드 추가
+
     @Bean
     public EurekaInstanceConfigBean eurekaInstanceConfig(InetUtils inetUtils) {
         EurekaInstanceConfigBean config = new EurekaInstanceConfigBean(inetUtils);
         String ip = null;
         try {
             ip = InetAddress.getLocalHost().getHostAddress();
-            log.info("ECS Task Container Private Ip address is {}", ip);
+            log.info("ECS Task Container Private IP address is {}", ip);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
 
         config.setIpAddress(ip);
         config.setPreferIpAddress(true);
+        config.setNonSecurePort(serverPort);  // 설정한 server.port를 사용하여 nonSecurePort 설정
 
         return config;
     }
