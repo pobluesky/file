@@ -72,6 +72,10 @@ dependencies {
 
     //postgres
     implementation 'org.postgresql:postgresql:42.7.4'
+
+    //cloudfront
+    implementation 'software.amazon.awssdk:cloudfront:2.28.7'
+    testImplementation 'software.amazon.awssdk:url-connection-client:2.28.7'
 }
 
 

@@ -5,15 +5,10 @@ import com.pobluesky.file.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import com.pobluesky.global.util.ResponseFactory;
-import com.pobluesky.global.util.model.CommonResult;
-import com.pobluesky.global.util.model.JsonResult;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,13 +28,14 @@ public class FileUploadController {
     @PostMapping
     @Operation(summary = "file 업로드")
     public FileInfo uploadFile(@RequestPart("file") MultipartFile file) {
-        
+        log.debug("파일 업로드 시작 controller");
         return fileService.uploadFile(file);
     }
 
-    @GetMapping("/health")
-    public ResponseEntity<CommonResult> healthCheck() {
-        
-        return ResponseEntity.ok(ResponseFactory.getSuccessResult());
+    @GetMapping("/download")
+    @Operation(summary = "파일 다운로드 URL 생성")
+    public ResponseEntity<String> generateDownloadUrl(@RequestParam("objectKey") String objectKey) {
+        String signedUrl = fileService.generateSignedUrl(objectKey);
+        return ResponseEntity.ok(signedUrl);
     }
 }
