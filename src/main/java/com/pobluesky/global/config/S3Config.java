@@ -15,7 +15,7 @@ public class S3Config {
     @Bean
     public AmazonS3 s3Builder() {
 
-        Dotenv dotenv = Dotenv.load(); // 나중에는 System.getenv를 써야할듯
+//        Dotenv dotenv = Dotenv.load(); // 나중에는 System.getenv를 써야할듯
         String accessKey = System.getenv("AWS_ACCESS_KEY");
         String secretKey = System.getenv("AWS_SECRET_KEY");
         String region = System.getenv("AWS_REGION");
