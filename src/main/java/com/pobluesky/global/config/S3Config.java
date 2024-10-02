@@ -16,12 +16,12 @@ public class S3Config {
     public AmazonS3 s3Builder() {
 
         Dotenv dotenv = Dotenv.load(); // 나중에는 System.getenv를 써야할듯
-//        String accessKey = System.getenv("AWS_ACCESS_KEY");
-//        String secretKey = System.getenv("AWS_SECRET_KEY");
-//        String region = System.getenv("AWS_REGION");
-        String accessKey = dotenv.get("AWS_ACCESS_KEY");
-        String secretKey = dotenv.get("AWS_SECRET_KEY");
-        String region = dotenv.get("AWS_REGION");
+        String accessKey = System.getenv("AWS_ACCESS_KEY");
+        String secretKey = System.getenv("AWS_SECRET_KEY");
+        String region = System.getenv("AWS_REGION");
+//        String accessKey = dotenv.get("AWS_ACCESS_KEY");
+//        String secretKey = dotenv.get("AWS_SECRET_KEY");
+//        String region = dotenv.get("AWS_REGION");
 
 
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
