@@ -33,7 +33,7 @@ public class FileService {
 
     private final AmazonS3 amazonS3;
 
-    Dotenv dotenv = Dotenv.load();
+//    Dotenv dotenv = Dotenv.load();
 
     private final String bucketName = System.getenv("S3_BUCKET_NAME");
 //    private final String bucketName = dotenv.get("S3_BUCKET_NAME");
